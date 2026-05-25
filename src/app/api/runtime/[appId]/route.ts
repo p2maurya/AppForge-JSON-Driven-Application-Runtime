@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { ok, err, unauthorized, notFound } from "@/lib/response";
 import { parseConfig } from "@/lib/config-validator";
 import type { FormConfig } from "@/types/config";
+import type { Prisma } from "@prisma/client";
 
 async function resolveApp(appId: string, userId: string) {
   return prisma.app.findFirst({ where: { id: appId, userId } });
@@ -104,7 +105,7 @@ export async function POST(
   }
 
   const record = await prisma.appRecord.create({
-    data: { appId, data: data as object },
+    data: { appId, data: data as Prisma.InputJsonValue },
   });
 
   return ok(record, 201);
