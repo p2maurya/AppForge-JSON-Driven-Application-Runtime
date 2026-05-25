@@ -104,7 +104,7 @@ export async function POST(
   }
 
   const record = await prisma.appRecord.create({
-    data: { appId, data },
+    data: { appId, data: data as object },
   });
 
   return ok(record, 201);
